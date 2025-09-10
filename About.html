@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us </title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+  <style>
+       .nav-close {
+        display: block !important;
+        position: absolute !important;
+        top: 20px !important;
+        right: 20px !important;
+        font-size: 2rem !important;
+        color: #fff !important;
+        cursor: pointer !important;
+        z-index: 1001 !important;
+        background: none !important;
+        border: none !important;
+        padding: 0 !important;
+        width: 40px !important;
+        height: 40px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      
+      .overlay {
+        display: none !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        /* background: rgba(0, 0, 0, 0.6) !important; */
+        /* z-index: 999 !important; */
+      }
+      
+      .overlay.show {
+        display: block !important;
+      }
+  </style>
+  <!-- Header -->
+  <nav>
+    <div class="logo">
+      <a href="./index.html"><img src="./assests/Logo.jpeg" alt="DGital Logo" style="height:auto ; width: 100px; vertical-align:middle; margin-right:8px;"></a>
+    </div>
+    <div class="nav-toggle" id="navToggle" aria-label="Toggle navigation" tabindex="0">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <ul id="navMenu">
+      <span class="nav-close" id="navClose">&times;</span>
+      <li><a href="./index.html">Home</a></li>
+      <li><a href="./About.html">About</a></li>
+      <li><a href="./index.html#services">Service</a></li>
+      
+    </ul>
+    <a href="./index.html#newsletter" class="btn">Get Started</a>
+  </nav>
+  <div id="overlay" class="overlay"></div>
+
+  <!-- Who we are -->
+  <section class="who-we-are">
+    <div class="content">
+      <h2>Who we are</h2>
+      <p>We are among the fastest-growing HR service providers in Delhi NCR, offering staffing solutions uniquely tailored to match your specific candidate requirements and budget. Our customized approach ensures a seamless recruitment process that not only saves valuable time for recruiters but also optimizes costs, making hiring simpler, faster, and more efficient.</p>
+      <button class="btn">Download Company Profile</button>
+    </div>
+    <div class="image">
+      <img src="./assests/about-banner.jpeg" alt="">
+    </div>
+  </section>
+
+  <!-- Vision -->
+  <section class="vision">
+    <h2>Our Vision</h2>
+    <p>We empower companies to thrive in today’s competitive landscape while nurturing the best version of our people. By simplifying the recruitment process, we make it easier for organizations to find the right talent and for individuals to access the right opportunities, enabling both to achieve continuous growth and long-term success.</p>
+  </section>
+
+  <!-- Why we stand out -->
+ <section class="standout">
+  <div class="standout-container">
+    <h2 class="standout-title">Why Choose <span>Hyrenex Hub?</span></h2>
+    <p class="standout-subtitle">
+      We strongly believe in the potential of our people and the value they bring. Join us to be a part of our collaborative work culture—whether as a member of our in-house team or as a consultant. We treat everyone like family and are committed to supporting you in achieving your goals and ambitions.
+
+    <div class="standout-grid">
+      <div class="card">
+        <div class="icon">🚀</div>
+        <h3>Fast Growth</h3>
+        <p>Accelerate your business with tools designed for rapid scalability.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🎯</div>
+        <h3>Targeted Solutions</h3>
+        <p>Get curated resources that match your unique goals.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🤝</div>
+        <h3>Trusted Support</h3>
+        <p>24/7 assistance to help you every step of the way.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <!-- ESG -->
+  <section class="esg">
+    <div class="left"></div>
+    <div class="right">
+      <h2>Our ESG Impact</h2>
+      <p>Our business is driven by purpose, and we are committed to living that purpose every day—to empower our people, support our communities, and create a positive impact in the world. The challenges we aim to address, such as climate change, affordable healthcare, and equity, are significant and require collective effort beyond Digitaly ResourceHub. Together with our employees, consultants, clients, and community partners, we believe there are no limits to the change we can create.</p>
+      <button class="btn">View Our Impact</button>
+    </div>
+  </section>
+
+  <div id="newsletterModal" class="modal">
+  <div class="modal-content">
+    <h2>✅ Success!</h2>
+    <p>Your email sent successfully.</p>
+    <button id="closeModal">OK</button>
+  </div>
+</div>
+
+ <footer>
+  <div class="footer-main">
+    <div class="footer-col">
+      <h4>ADDRESS <span class="footer-line"></span></h4>
+      <ul>
+        <li><i class="fas fa-map-marker-alt"></i>The Office Pass (TOP), Mohan Cooperative, South Delhi </li>
+        <li><i class="fas fa-phone"></i> +91 99999 46055</li>
+        <li><i class="fas fa-envelope"></i> info@hyrenex.com</li>
+      </ul>
+      <div class="footer-social">
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>QUICK LINK <span class="footer-line"></span></h4>
+      <ul>
+        <li><a href="./About.html">About Us</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms & Condition</a></li>
+        
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>GALLERY <span class="footer-line"></span></h4>
+      <div class="footer-gallery">
+        <img src="./assests/portfolio-1.jpg" alt="">
+        <img src="./assests/portfolio-2.jpg" alt="">
+        <img src="./assests/portfolio-3.jpg" alt="">
+        <img src="./assests/portfolio-4.jpg" alt="">
+        <img src="./assests/portfolio-5.jpg" alt="">
+        <img src="./assests/portfolio-6.jpg" alt="">
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>NEWSLETTER <span class="footer-line"></span></h4>
+      <p style="color: #fff;">Our values are the most important part of our organization. </p>
+      <form class="footer-newsletter">
+        <input type="email" placeholder="Your Email">
+        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+      </form>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2025 DGital Agency. All Rights Reserved. Designed by HTML Codex.
+  </div>
+</footer>
+<script src="./script.js"></script>
+
+</body>
+</html>

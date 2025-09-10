@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <title>Digital Agency</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif; }
+    body { background:#fff; color:#333; }
+    a { text-decoration:none; color:inherit; }
+
+    /* Navbar */
+      nav {
+      display:flex; justify-content:space-between; align-items:center;
+      padding:15px 8%; background:#6c2eb9;
+      position: sticky; top:0; left:0; right:0;
+      height: 110px;
+      z-index: 300;
+    }
+    nav .logo { font-size:1.5rem; font-weight:bold; color:white; }
+    nav .btn {
+      background:white; color:#6c2eb9; padding:8px 18px; border-radius:20px;
+      font-weight:bold; transition:.2s;
+      margin-top: 0;
+    }
+    nav .btn:hover { background:orange; color:#fff; }
+
+    /* Toggle Icon */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+      margin-left: 16px;
+      z-index: 400;
+      position: relative;
+    }
+    .nav-toggle span {
+      height: 4px;
+      width: 100%;
+      background: #fff;
+      margin: 4px 0;
+      border-radius: 2px;
+      transition: 0.3s;
+      position: relative;
+    }
+    .nav-toggle.active span:nth-child(1) {
+      transform: rotate(45deg) translate(6px, 6px);
+    }
+    .nav-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .nav-toggle.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -7px);
+    }
+
+    /* Desktop nav menu */
+    nav ul {
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+      list-style: none;
+      position: static;
+      background: transparent;
+      height: auto;
+      width: auto;
+      padding: 0;
+      align-items: center;
+      transition: none;
+      z-index: 200;
+    }
+    nav ul li a {
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: bold;
+      padding: 8px 0;
+      display: block;
+      transition: color 0.2s;
+    }
+    nav ul li a:hover {
+      color: orange;
+    }
+    .nav-close { display: none; }
+  
+
+    /* Hero */
+    .hero {
+      display:flex; align-items:center; justify-content:space-between; gap:30px;
+      background:#6c2eb9; padding:60px 8% 40px 8%; color:white; flex-wrap:wrap;
+      position:relative;
+    }
+    .hero-text { max-width:500px; }
+    .hero-text h1 { font-size:2rem; margin-bottom:15px; }
+    .hero-text p { margin-bottom:25px; line-height:1.5; }
+    .hero-text a { padding:10px 20px; border-radius:25px; font-weight:bold; margin-right:10px; display:inline-block; }
+    .btn-yellow { background:orange; color:black; }
+    .btn-white { background:white; color:#6c2eb9; }
+    .hero img { max-width:400px; width:100%; }
+    .hero-wave {
+      position:absolute; left:0; right:0; bottom:-1px; width:100%; height:60px;
+      background:url('./assests/wave.svg') no-repeat center/cover;
+    }
+
+    /* Section Headings */
+    .section-title {
+      color:#6c2eb9; font-weight:bold; letter-spacing:2px; font-size:0.9rem;
+      margin-bottom:8px; text-transform:uppercase;
+    }
+    .section-subtitle {
+      font-size:1.5rem; font-weight:bold; margin-bottom:30px;
+    }
+
+     /* Services */
+    .section { padding:40px 8%; text-align:center; background:#fff; }
+    .services { display:flex; gap:20px; flex-wrap:wrap; justify-content:center; }
+    .service-card {
+  background:#f8f8f8; padding:30px 20px; flex:1 1 250px;
+  border-radius:12px; text-align:center; box-shadow:0 2px 8px #eee;
+  min-width:220px;
+  transition: transform 0.3s cubic-bezier(.4,2,.3,1); /* Add this */
+}
+.service-card:hover {
+  transform: translateY(-15px); /* Add this for translate up */
+  box-shadow:0 8px 24px #ddd; /* Optional: stronger shadow on hover */
+}
+    .service-card img { width:40px; margin-bottom:15px; }
+    .service-card h3 { margin:10px 0 10px 0; font-size:1.1rem; }
+    .service-card p { font-size:0.95rem; color:#666; }
+
+    /* About */
+    .about { display:flex; gap:40px; flex-wrap:wrap; align-items:center; text-align:left; background:#fff; }
+    .about img { max-width:400px; width:100%; border-radius:12px; }
+    .about-text { flex:1; }
+    .about-text h2 { font-size:1.3rem; margin-bottom:15px; }
+    .about-text p { margin-bottom:20px; color:#555;  }
+
+    .modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  inset: 0; /* top:0; right:0; bottom:0; left:0 */
+  background: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* Modal Box */
+.modal-content {
+  background: #fff;
+  padding: 20px 25px;
+  width: 320px;
+  text-align: center;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  transform: scale(0.9);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+/* Show animation */
+.modal.show .modal-content {
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* Heading */
+.modal-content h2 {
+  margin-bottom: 10px;
+  font-size: 20px;
+  color: #333;
+}
+
+/* Paragraph */
+.modal-content p {
+  font-size: 15px;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+/* Button */
+.modal-content button {
+  padding: 8px 18px;
+  font-size: 15px;
+  background: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.modal-content button:hover {
+  background: #218838;
+}
+
+/* Highlight empty input */
+input.error {
+  border: 2px solid red;
+}
+    @media (min-width: 1024px) {
+  .about-text p {
+    margin-bottom: 20px;
+    color: #555;
+    padding-right: 220px;
+  }
+}
+    .about-progress { margin-bottom:30px; }
+    .about-list li{ margin-bottom: 10px;}
+    .progress-bar {
+      background:#eee; border-radius:8px; overflow:hidden; height:8px; margin-bottom:25px;
+    }
+    .progress-bar span {
+      display:block; height:100%; background:#6c2eb9;
+    }
+    .btn-purple {
+  background: #6c2eb9;
+  color: #fff;
+  padding: 16px 40px;
+  border-radius: 32px;
+  font-weight: bold;
+  font-size: 1.05rem;
+  border: none;
+  display: inline-block;
+  transition: background 0.2s, color 0.2s;
+  box-shadow: 0 2px 8px #eee;
+}
+.btn-purple:hover {
+  background: orange;
+  color: #fff;
+}
+    .about-list { margin-bottom:20px; }
+    .about-list li { margin-bottom:6px; font-size:0.98rem; }
+
+
+    /* Stats */
+    .stats {
+      display:flex; justify-content:space-around; background:#6c2eb9;
+      color:white; padding:40px 8%; flex-wrap:wrap; gap:20px;
+    }
+    .stat { text-align:center; margin:10px; flex:1 1 150px; }
+    .stat img { width:32px; margin-bottom:10px; }
+    .stat h3 { font-size:2rem; margin-bottom:5px; }
+    .stat p { font-size:1rem; }
+
+    /* Solutions */
+    .solutions-title { margin-bottom:20px; }
+    .solutions {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+
+.solution-card {
+  background:#f8f8f8;
+  padding:30px 20px;
+  border-radius:12px;
+  text-align:center;
+  box-shadow:0 2px 8px #eee;
+  min-width:180px;
+  position:relative;
+  transition:background 0.3s, color 0.3s;
+}
+.solution-card i {
+  display:inline-block;
+  background:#6c2eb9;
+  color:#fff;
+  border-radius:16px;
+  padding:12px;
+  margin-bottom:10px;
+  font-size:32px;
+  transition:background 0.3s, color 0.3s;
+}
+.solution-card:hover {
+  background:#6c2eb9;
+  color:#fff;
+}
+.solution-card:hover i {
+  background:orange;
+  color:#6c2eb9;
+}
+
+
+    .solution-card img { width:32px; margin-bottom:10px; }
+    .solution-card h4 { margin-bottom:8px; font-size:1.05rem; }
+    .solution-card p { color:#666; font-size:0.95rem; }
+
+    /* Newsletter */
+    .newsletter-highlight {
+  background: #6527d7;
+  color: #fff;
+  padding: 70px 8%;
+  text-align: center;
+  position: relative;
+ 
+  margin: 40px 0;
+  overflow: hidden;
+}
+.newsletter-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.newsletter-line {
+  display: inline-block;
+  width: 40px;
+  height: 2px;
+  background: #fff;
+  opacity: 0.5;
+  margin-left: 12px;
+}
+.newsletter-heading {
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin-bottom: 18px;
+}
+.newsletter-desc {
+  font-size: 1.08rem;
+  margin-bottom: 32px;
+  color: #fff;
+  opacity: 0.9;
+}
+.newsletter-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  max-width: 700px;
+  margin: 0 auto;
+}
+.newsletter-form input {
+  padding: 18px 24px;
+  border: none;
+  border-radius: 30px 0 0 30px;
+  width: 100%;
+  font-size: 1.1rem;
+  outline: none;
+  background: #fff;
+  color: #333;
+}
+.newsletter-form button {
+  padding: 0 28px;
+  border: none;
+  border-radius: 0 30px 30px 0;
+  background: #fff;
+  color: #6527d7;
+  font-size: 1.5rem;
+  height: 56.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
+}
+.newsletter-form button:hover {
+  background: orange;
+  color: #fff;
+}
+
+
+    /* Projects */
+  .projects-title { 
+  margin-bottom:10px; 
+}
+
+.projects {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Desktop default */
+  gap: 20px;
+}
+
+.project-card {
+  background:#f8f8f8; 
+  border-radius:12px; 
+  overflow:hidden; 
+  text-align:center;
+  box-shadow:0 2px 8px #eee; 
+  padding-bottom:15px;
+}
+
+.project-card img { 
+  width:100%; 
+  border-radius:12px 12px 0 0; 
+}
+
+.project-card h4 { 
+  margin:10px 0 5px 0; 
+  font-size:1rem; 
+}
+
+.project-card p { 
+  color:#666; 
+  font-size:0.95rem; 
+}
+
+/* Tablet (2 columns) */
+@media (max-width: 991px) {
+  .projects {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .project-card img {
+    width: 100%;
+    border-radius: 12px 12px 0 0;
+    height: 300px;
+  }
+}
+
+/* Mobile (1 column) */
+@media (max-width: 576px) {
+  .projects {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+    /* Testimonials */
+    .testimonials-title { margin-bottom:10px; }
+    .testimonials { display:flex; gap:20px; flex-wrap:wrap; justify-content:center; }
+    .testimonial {
+      background:#f8f8f8; padding:25px 20px; border-radius:12px; flex:1 1 300px;
+      box-shadow:0 2px 8px #eee; text-align:left; min-width:220px;
+      display:flex; flex-direction:column; align-items:flex-start;
+    }
+    .testimonial p { font-style:italic; margin-bottom:10px; color:#555; }
+    .testimonial-info { display:flex; align-items:center; gap:10px; margin-top:10px; }
+    .testimonial-info img { width:40px; height:40px; border-radius:50%; object-fit:cover; }
+    .testimonial-info .name { font-weight:bold; }
+    .testimonial-info .role { font-size:0.95rem; color:#888; }
+
+    /* Team */
+    .team-title { margin-bottom:20px; }
+    .team { display:flex; gap:20px; flex-wrap:wrap; justify-content:center; }
+    .team-member {
+  background:#f8f8f8;
+  padding:25px 20px;
+  border-radius:12px;
+  text-align:center;
+  flex:1 1 220px;
+  box-shadow:0 2px 8px #eee;
+  min-width:180px;
+  transition: transform 0.3s cubic-bezier(.4,2,.3,1);
+}
+.team-member:hover {
+  transform: translateY(-15px);
+  box-shadow:0 8px 24px #ddd;
+}
+    .team-member img { width:90px; height:90px; border-radius:50%; object-fit:cover; margin-bottom:10px; }
+    .team-member h3 { margin-bottom:5px; font-size:1.05rem; }
+    .team-member p { color:#888; font-size:0.95rem; margin-bottom:10px; }
+    .team-social { display:flex; justify-content:center; gap:10px; }
+    .team-social a { color:#6c2eb9; font-size:1.2rem; }
+
+    /* Footer */
+
+footer {
+  background: #6c2eb9;
+  color: #fff;
+  padding: 60px 8% 20px 8%;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  margin-top: 0;
+  position: relative;
+  text-align: left;
+}
+.footer-main {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+.footer-col {
+  flex: 1 1 220px;
+  min-width: 220px;
+}
+.footer-col h4 {
+  margin-bottom: 16px;
+  font-size: 1.1rem;
+  color: #fff;
+  font-weight: bold;
+  letter-spacing: 1px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.footer-line {
+  flex: 1;
+  height: 2px;
+  background: #fff;
+  margin-left: 12px;
+  opacity: 0.5;
+}
+.footer-col ul {
+  list-style: none;
+  padding: 0;
+}
+.footer-col ul li {
+  margin-bottom: 10px;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.footer-col ul li a {
+  color: #fff;
+  font-size: 1rem;
+  transition: color 0.2s;
+}
+.footer-col ul li a:hover {
+  color: orange;
+}
+.footer-social {
+  margin-top: 12px;
+  display: flex;
+  gap: 12px;
+}
+.footer-social a {
+  color: #fff;
+  font-size: 1.2rem;
+  transition: color 0.2s;
+}
+.footer-social a:hover {
+  color: orange;
+}
+.footer-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 8px;
+}
+.footer-gallery img {
+  width: 60px;
+  border-radius: 8px;
+  object-fit: cover;
+  height: 40px;
+}
+.footer-newsletter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+.footer-newsletter input {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 20px;
+  width: 160px;
+  font-size: 1rem;
+  outline: none;
+}
+.footer-newsletter button {
+  padding: 0 16px;
+  border: none;
+  border-radius: 20px;
+  background: #fff;
+  color: #6c2eb9;
+  font-size: 1.2rem;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+}
+.footer-newsletter button:hover {
+  background: orange;
+  color: #fff;
+}
+.footer-bottom {
+  text-align: center;
+  color: #ddd;
+  font-size: 0.95rem;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #fff2;
+  opacity: 0.8;
+}
+@media (max-width:900px) {
+  .footer-main { flex-direction:column; gap:20px; }
+  .footer-col { min-width:180px; }
+  .footer-gallery img { width:48px; height:32px; }
+   
+}
+
+
+    /* Responsive */
+    @media (max-width:900px) {
+      .about { flex-direction:column; text-align:center; }
+      .stats { flex-direction:column; gap:10px; }
+      .footer-main { flex-direction:column; gap:20px; }
+      .team { flex-direction:column; }
+       .services {
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+      }
+      .service-card {
+        width: 100%;
+        max-width: 500px;
+      }
+    }
+
+    @media (max-width:700px) {
+  .newsletter-form {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .newsletter-form input,
+  .newsletter-form button {
+    border-radius: 30px !important;
+    width: 100%;
+    height: 48px;
+  }
+}
+
+    /* --- MOBILE NAV --- */
+    @media (max-width: 900px) {
+      .nav-toggle {
+        display: flex !important;
+      }
+      
+      nav ul {
+        position: fixed !important;
+        top: 0 !important;
+        left: -100% !important;
+        width: 280px !important;
+        height: 100vh !important;
+        background: #6c2eb9 !important;
+        flex-direction: column !important;
+        padding: 80px 30px 30px 30px !important;
+        gap: 20px !important;
+        list-style: none !important;
+        transition: left 0.3s ease-in-out !important;
+        z-index: 1000 !important;
+        display: flex !important;
+        align-items: flex-start !important;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.3) !important;
+      }
+      
+      nav ul.show {
+        left: 0 !important;
+      }
+      
+      .nav-close {
+        display: block !important;
+        position: absolute !important;
+        top: 20px !important;
+        right: 20px !important;
+        font-size: 2rem !important;
+        color: #fff !important;
+        cursor: pointer !important;
+        z-index: 1001 !important;
+        background: none !important;
+        border: none !important;
+        padding: 0 !important;
+        width: 40px !important;
+        height: 40px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      
+      .overlay {
+        display: none !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        /* background: rgba(0, 0, 0, 0.6) !important; */
+        /* z-index: 999 !important; */
+      }
+      
+      .overlay.show {
+        display: block !important;
+      }
+    }
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+      }
+      .nav-toggle {
+        align-self: flex-end;
+        position: relative;
+        top: -40px;
+      }
+      nav ul {
+        width: 80vw;
+        min-width: 180px;
+        padding: 60px 10vw 20px 10vw;
+      }
+       .service-card {
+        padding: 20px 10px;
+        min-width: 0;
+        max-width: 100%;
+      }
+    }
+    @media (min-width: 901px) {
+      nav ul {
+        position: static !important;
+        left: 0 !important;
+        flex-direction: row !important;
+        height: auto !important;
+        width: auto !important;
+        background: transparent !important;
+        padding: 0 !important;
+        gap: 20px !important;
+        display: flex !important;
+        align-items: center !important;
+      }
+      .nav-toggle, .nav-close, .overlay { display: none !important; }
+      nav .btn { margin-top: 0 !important; }
+    }
+     @media (max-width: 900px) {
+      .solutions {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 600px) {
+      .solutions {
+        grid-template-columns: 1fr;
+      }
+    }
+     @media (max-width: 900px) {
+      nav {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 5vw;
+      }
+      .logo {
+        flex: 1 1 auto;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+      }
+      .nav-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 0;
+        z-index: 400;
+      }
+      .btn {
+        display: none;
+      }
+    }
+  </style>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+
+  <nav>
+    <div class="logo">
+      <a href="./index.html"><img src="./assests/Logo.jpeg" alt="DGital Logo" style="height:auto ; width: 100px; vertical-align:middle; margin-right:8px;"></a>
+    </div>
+    <div class="nav-toggle" id="navToggle" aria-label="Toggle navigation" tabindex="0">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <ul id="navMenu">
+      <span class="nav-close" id="navClose">&times;</span>
+      <li><a href="./index.html">Home</a></li>
+      <li><a href="./About.html">About</a></li>
+      <li><a href="./index.html#services">Service</a></li>
+      
+    </ul>
+    <a href="./index.html#newsletter" class="btn">Get Started</a>
+  </nav>
+  <div id="overlay" class="overlay"></div>
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-text">
+    <h1>Together We Can!</h1>
+    <p>Hyrenex is a trusted partner and among the top recruitment process outsourcing companies, dedicated to connecting you with high-performing teams and visionary leaders. With the right resources in place, we can achieve shared goals and drive success together.
+
+</p>
+   
+    
+  </div>
+  <img src="./assests/hero.png" alt="Hero Image">
+  <div class="hero-wave"></div>
+</section>
+
+
+<!-- About -->
+<section class="section about">
+  <div class="about-text">
+    <div class="section-title">ABOUT US</div>
+    <h2>#1 Digital solution with 2 years of experience</h2>
+    <p>At Hyrenex, we strongly believe that people are the most valuable asset of any business. That is why we dedicate ourselves to helping our clients connect with the right talent that drives growth, innovation, and long-term success. Our approach goes beyond filling positions—we focus on understanding the unique needs of every organization and delivering recruitment solutions that align with their culture and vision. With a deep commitment to excellence, integrity, and collaboration, we ensure that our clients receive not only the best talent but also a trusted partner in building a stronger workforce.</p>
+
+    
+    <a href="./About.html" class="btn-purple">Read More</a>
+  </div>
+  <img src="./assests/about.png" alt="About Image">
+</section>
+
+
+<!-- Stats -->
+<section class="stats">
+  <div class="stat">
+    <i class="fas fa-award" style="font-size:32px;color:white;margin-bottom:10px;"></i>
+    <h3>321</h3>
+    <p>Years Experience</p>
+  </div>
+  <div class="stat">
+    <i class="fas fa-users" style="font-size:32px;color:white;margin-bottom:10px;"></i>
+    <h3>321</h3>
+    <p>Team Members</p>
+  </div>
+  <div class="stat">
+    <i class="fas fa-smile" style="font-size:32px;color:white;margin-bottom:10px;"></i>
+    <h3>321</h3>
+    <p>Satisfied Clients</p>
+  </div>
+  <div class="stat">
+    <i class="fas fa-check-circle" style="font-size:32px;color:white;margin-bottom:10px;"></i>
+    <h3>321</h3>
+    <p>Completed Projects</p>
+  </div>
+</section>
+
+
+<!-- Newsletter -->
+<section class="newsletter newsletter-highlight" id="newsletter">
+  <div class="newsletter-title">NEWSLETTER <span class="newsletter-line"></span></div>
+  <h2 class="newsletter-heading">Stay Always In Touch</h2>
+  <p class="newsletter-desc">Our values are the most important part of our organization.</p>
+  <form class="newsletter-form">
+    <input type="email" placeholder="Enter Your Email">
+    <button type="submit"><i class="fas fa-paper-plane"></i></button>
+  </form>
+</section>
+<!-- Projects -->
+<section class="section" id="services">
+  
+  <div class="section-subtitle projects-title">Our Services</div>
+  <div class="projects">
+    <!-- <div class="project-card">
+      <img src="./assests/portfolio-1.jpg" alt="">
+      <h4>UI/UX Design</h4>
+      <p>Digital Agency Website Design And Development</p>
+    </div> -->
+    <div class="project-card">
+      <img src="./assests/portfolio-2.jpg" alt="">
+      <h4>Find a Job</h4>
+      <p>Get a career opportunity with a business that Hyrenex represents. Contract, Permanent Contract.</p>
+    </div>
+    <div class="project-card">
+      <img src="./assests/portfolio-3.jpg" alt="">
+      <h4>Staffing Solutions</h4>
+      <p>Hire the right person or people for your business using Hyrenex</p>
+    </div>
+    <div class="project-card">
+      <img src="./assests/join.jpg" alt="">
+      <h4>Join Our Team</h4>
+      <p>You can join us to shape your career in Recruiting, Sales, and also apply for Internships</p>
+    </div>
+    <!-- <div class="project-card">
+      <img src="./assests/ui.jpg" alt="">
+      <h4>UI/UX Design</h4>
+      <p>Digital Agency App Design And Development</p>
+    </div>
+    <div class="project-card">
+      <img src="./assests/corporate-businessmen-shaking-hands.jpg" alt="">
+      <h4>Evergreen Managed Services</h4>
+      <p>Take a look at specialized solutions and assistance for project/program management, team, and process management.</p>
+    </div> -->
+  </div>
+</section>
+
+<!-- Testimonials
+<section class="section">
+  <div class="section-title">TESTIMONIAL</div>
+  <div class="section-subtitle testimonials-title">What Say Our Clients!</div>
+  <div class="testimonials">
+    <div class="testimonial">
+      <p>"The hiring process was smooth and hassle-free. We found the right candidates quickly without wasting time or resources"</p>
+      <div class="testimonial-info">
+        <img src="./assests/testimonial-2.jpg" alt="Client 1">
+        <div>
+          <div class="name">Client Name</div>
+          <div class="role">Profession</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial">
+      <p>"Their recruitment team understood our requirements perfectly and delivered qualified candidates within days. Highly professional service!"</p>
+      <div class="testimonial-info">
+        <img src="./assests/testimonial-3.jpg" alt="Client 2">
+        <div>
+          <div class="name">Client Name</div>
+          <div class="role">Profession</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<!-- Team -->
+<!-- <section class="section">
+  <div class="section-title">OUR TEAM</div>
+  <div class="section-subtitle team-title">Our Team Members</div>
+  <div class="team">
+    <div class="team-member">
+      <img src="./assests/team-1.jpg" alt="John Doe">
+      <h3>John Doe</h3>
+      <p>CEO & Founder</p>
+      <div class="team-social">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+    <div class="team-member">
+      <img src="./assests/team-2.jpg" alt="Jessica Brown">
+      <h3>Jessica Brown</h3>
+      <p>Web Designer</p>
+      <div class="team-social">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+    <div class="team-member">
+      <img src="./assests/team-3.jpg" alt="Tony Johnson">
+      <h3>Tony Johnson</h3>
+      <p>UI/UX Expert</p>
+      <div class="team-social">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+
+
+    </div>
+
+
+    <div id="newsletterModal" class="modal">
+  <div class="modal-content">
+    <h2>✅ Success!</h2>
+    <p>Your email sent successfully.</p>
+    <button id="closeModal">OK</button>
+  </div>
+</div>
+
+  </div>
+</section> -->
+
+<!-- ...existing code... -->
+
+<footer>
+  <div class="footer-main">
+    <div class="footer-col">
+      <h4>ADDRESS <span class="footer-line"></span></h4>
+      <ul>
+        <li><i class="fas fa-map-marker-alt"></i> The Office Pass (TOP), Mohan Cooperative, South Delhi</li>
+        <li><i class="fas fa-phone"></i> +91 99999 46055</li>
+        <li><i class="fas fa-envelope"></i> info@hyrenex.com</li>
+      </ul>
+      <div class="footer-social">
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>QUICK LINK <span class="footer-line"></span></h4>
+      <ul>
+        <li><a href="./About.html">About Us</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms & Condition</a></li>
+       
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>GALLERY <span class="footer-line"></span></h4>
+      <div class="footer-gallery">
+        <img src="./assests/portfolio-1.jpg" alt="">
+        <img src="./assests/portfolio-2.jpg" alt="">
+        <img src="./assests/portfolio-3.jpg" alt="">
+        <img src="./assests/portfolio-4.jpg" alt="">
+        <img src="./assests/portfolio-5.jpg" alt="">
+        <img src="./assests/portfolio-6.jpg" alt="">
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>NEWSLETTER <span class="footer-line"></span></h4>
+      <p>Our values are the most important part of our organization.</p>
+      <form class="footer-newsletter">
+        <input type="email" placeholder="Your Email">
+        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+      </form>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2025 DGital Agency. All Rights Reserved. Designed by HTML Codex.
+  </div>
+</footer>
+<script src="./script.js"></script>
+
+
+</body>
+</html>
